@@ -11,24 +11,24 @@
 # matrix and to cache the result.
 
 ## makeCacheMatrix returns a list of four functions
-makeCacheMatrix <- function(x = matrix()) {
-    #print("makeCacheMatrix: ")
+makeCacheMatrix <- function(x = matrix(), verbose = FALSE) {
+    if (verbose) print("makeCacheMatrix: ")
     x.inv <- NULL   
     set <- function(x.new) {
-        #print("set: ")
+        if (verbose) print("set: ")
         x <<- x.new
         x.inv <<- NULL
     }
     get <- function() {
-        #print("get: ")
+        if (verbose) print("get: ")
         x
     }
     setinv <- function(inv) {
-        #print("setinv: ")
+        if (verbose) print("setinv: ")
         x.inv <<- inv        
     }  
     getinv <- function() {
-        #print("getinv: ")
+        if (verbose) print("getinv: ")
         x.inv
     }
     list(set = set, get = get,
@@ -37,15 +37,15 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 ## cacheSolve returns the matrix inverse of x and caches the result
-cacheSolve <- function(x, ...) {
+cacheSolve <- function(x, verbose = FALSE, ...) {
     ## Return a matrix that is the inverse of 'x'
-    #print("cacheSolve: ")
+    if (verbose) print("cacheSolve: ")
     x.inv <- x$getinv()
     if (!is.null(x.inv)) {
         message("getting cached inverse")
         return(x.inv)
     }
-    #message("calculating inverse")
+    if (verbose) message("calculating inverse")
     data <- x$get()
     x.inv <- solve(data, ...)
     x$setinv(x.inv)
